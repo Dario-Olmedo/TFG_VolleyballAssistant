@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Entrenamiento</title>
+</head>
+<body>
+<h1 th:text="${entrenamiento.id != null ? 'Editar Entrenamiento' : 'Nuevo Entrenamiento'}"></h1>
+<form th:action="@{/templates/entrenamientos}" th:object="${entrenamiento}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label for="categoria">Categoría:</label>
+    <select id="categoria" th:field="*{categoria}">
+        <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
+    </select>
+    <br>
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
+    <br>
+    <button type="submit">Guardar</button>
+</form>
+</body>
+</html>

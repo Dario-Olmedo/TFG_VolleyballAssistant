@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Lista de Entrenamientos</title>
+</head>
+<body>
+<h1>Entrenamientos</h1>
+<a href="/entrenamientos/nuevo">Añadir Entrenamiento</a>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Categoría</th>
+    <th>Descripción</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="entrenamiento : ${entrenamientos}">
+    <td th:text="${entrenamiento.id}"></td>
+    <td th:text="${entrenamiento.categoria}"></td>
+    <td th:text="${entrenamiento.descripcion}"></td>
+    <td>
+      <a th:href="@{/entrenamientos/editar/{id}(id=${entrenamiento.id})}">Editar</a>
+      <a th:href="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}">Eliminar</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
