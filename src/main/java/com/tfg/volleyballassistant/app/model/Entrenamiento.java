@@ -11,13 +11,17 @@ public class Entrenamiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING) // Usar el enum Categoria
+    @Enumerated(EnumType.STRING)
     @NotNull
     private Categoria categoria;
 
     @NotBlank
     @Column(length = 500)
     private String descripcion;
+
+    @NotBlank
+    @Column(length = 100) // Nuevo atributo: Título con máximo 100 caracteres
+    private String titulo;
 
     // Getters y Setters
     public Long getId() {
@@ -42,5 +46,19 @@ public class Entrenamiento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public enum Categoria {
+        TECNICA,
+        FISICO,
+        ESTRATEGIA
     }
 }
