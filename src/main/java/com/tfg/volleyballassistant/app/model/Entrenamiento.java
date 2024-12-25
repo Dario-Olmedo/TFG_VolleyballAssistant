@@ -11,17 +11,36 @@ public class Entrenamiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private Categoria categoria;
+    @NotBlank
+    @Column(length = 100)
+    private String titulo;
 
     @NotBlank
     @Column(length = 500)
     private String descripcion;
 
-    @NotBlank
-    @Column(length = 100) // Nuevo atributo: Título con máximo 100 caracteres
-    private String titulo;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Categoria categoria;
+
+    // Constructor vacío (necesario para JPA)
+    public Entrenamiento() {
+    }
+
+    // Constructor con argumentos
+    public Entrenamiento(String titulo, String descripcion, Categoria categoria) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+    }
+
+    // Constructor con ID
+    public Entrenamiento(Long id, String titulo, String descripcion, Categoria categoria) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+    }
 
     // Getters y Setters
     public Long getId() {
@@ -32,12 +51,12 @@ public class Entrenamiento {
         this.id = id;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescripcion() {
@@ -48,12 +67,22 @@ public class Entrenamiento {
         this.descripcion = descripcion;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        return "Entrenamiento{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categoria=" + categoria +
+                '}';
     }
 
     public enum Categoria {

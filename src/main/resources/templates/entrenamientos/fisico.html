@@ -8,6 +8,14 @@
 <body>
 <h1>Entrenamientos Físicos</h1>
 <p>Lista de entrenamientos enfocados en físico:</p>
-<!-- Aquí puedes listar los entrenamientos dinámicamente desde la base de datos -->
+<ul>
+  <!-- Iterar sobre los entrenamientos y mostrarlos -->
+  <th:block th:each="entrenamiento : ${entrenamientos}">
+    <li>
+      <strong th:text="${entrenamiento.titulo}">Título</strong>:
+      <span th:text="${entrenamiento.descripcion}">Descripción</span>
+    </li>
+  </th:block>
+</ul>
 </body>
 </html>

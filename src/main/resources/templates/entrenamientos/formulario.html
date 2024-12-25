@@ -5,16 +5,31 @@
 </head>
 <body>
 <h1 th:text="${entrenamiento.id != null ? 'Editar Entrenamiento' : 'Nuevo Entrenamiento'}"></h1>
-<form th:action="@{/templates/entrenamientos}" th:object="${entrenamiento}" method="post">
+<form th:action="@{/entrenamientos}" th:object="${entrenamiento}" method="post">
+    <!-- Campo oculto para el ID (solo útil en edición) -->
     <input type="hidden" th:field="*{id}">
+
+    <!-- Campo para el título -->
+    <label for="titulo">Título:</label>
+    <input id="titulo" type="text" th:field="*{titulo}" required>
+    <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></p>
+    <br>
+
+    <!-- Selección de categoría -->
     <label for="categoria">Categoría:</label>
-    <select id="categoria" th:field="*{categoria}">
+    <select id="categoria" th:field="*{categoria}" required>
         <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
     </select>
+    <p th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></p>
     <br>
+
+    <!-- Descripción -->
     <label for="descripcion">Descripción:</label>
     <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
+    <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></p>
     <br>
+
+    <!-- Botón de envío -->
     <button type="submit">Guardar</button>
 </form>
 </body>
