@@ -1,6 +1,5 @@
 package com.tfg.volleyballassistant.app.controllers;
 
-import com.tfg.volleyballassistant.app.model.Categoria;
 import com.tfg.volleyballassistant.app.model.Entrenamiento;
 import com.tfg.volleyballassistant.app.repository.EntrenamientoRepository;
 import jakarta.validation.Valid;
@@ -10,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/entrenamientos")
 public class EntrenamientoController {
@@ -17,56 +18,56 @@ public class EntrenamientoController {
     @Autowired
     private EntrenamientoRepository entrenamientoRepository;
 
-    @GetMapping
-    public String listarEntrenamientos(Model model) {
-        model.addAttribute("entrenamientos", entrenamientoRepository.findAll());
-        return "entrenamientos/lista";
+    // Lista de entrenamientos por categoría
+    @GetMapping("/{categoria}")
+    public String listarEntrenamientosPorCategoria(@PathVariable String categoria, Model model) {
+        Entrenamiento.Categoria categoriaEnum = Entrenamiento.Categoria.valueOf(categoria.toUpperCase());
+        List<Entrenamiento> entrenamientos = entrenamientoRepository.findByCategoria(categoriaEnum);
+        model.addAttribute("entrenamientos", entrenamientos);
+        model.addAttribute("categoria", categoriaEnum.name());
+        return "entrenamientos/categoria";
     }
 
+    // Formulario para nuevo entrenamiento
     @GetMapping("/nuevo")
     public String mostrarFormularioCreacion(Model model) {
         model.addAttribute("entrenamiento", new Entrenamiento());
-        model.addAttribute("categorias", Categoria.values());
+        model.addAttribute("categorias", Entrenamiento.Categoria.values());
         return "entrenamientos/formulario";
     }
 
+    // Guardar entrenamiento
     @PostMapping
     public String guardarEntrenamiento(@Valid @ModelAttribute Entrenamiento entrenamiento,
                                        RedirectAttributes attributes) {
         entrenamientoRepository.save(entrenamiento);
         attributes.addFlashAttribute("mensaje", "Entrenamiento guardado exitosamente.");
-        return "redirect:/entrenamientos";
+        return "redirect:/entrenamientos/" + entrenamiento.getCategoria().name().toLowerCase();
     }
 
-    @GetMapping("/editar/{id}")
-    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
+    // Ver detalle del entrenamiento
+    @GetMapping("/ver/{id}")
+    public String verEntrenamiento(@PathVariable Long id, Model model) {
         Entrenamiento entrenamiento = entrenamientoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("entrenamiento", entrenamiento);
-        model.addAttribute("categorias", Categoria.values());
-        return "entrenamientos/formulario";
+        return "entrenamientos/detalle";
     }
 
-    @PostMapping("/editar/{id}")
-    public String actualizarEntrenamiento(@PathVariable Long id,
-                                          @Valid @ModelAttribute Entrenamiento entrenamiento,
-                                          RedirectAttributes attributes) {
-        entrenamiento.setId(id);
-        entrenamientoRepository.save(entrenamiento);
-        attributes.addFlashAttribute("mensaje", "Entrenamiento actualizado exitosamente.");
-        return "redirect:/entrenamientos";
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminarEntrenamiento(@PathVariable Long id, RedirectAttributes attributes) {
+    // Eliminar entrenamiento desde el detalle
+    @PostMapping("/eliminar/{id}")
+    public String eliminarEntrenamientoDesdeDetalle(@PathVariable Long id, RedirectAttributes attributes) {
+        Entrenamiento entrenamiento = entrenamientoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         entrenamientoRepository.deleteById(id);
         attributes.addFlashAttribute("mensaje", "Entrenamiento eliminado exitosamente.");
-        return "redirect:/entrenamientos";
+        return "redirect:/entrenamientos/" + entrenamiento.getCategoria().name().toLowerCase();
     }
 
+    // Manejo de errores
     @ExceptionHandler(IllegalArgumentException.class)
     public String manejarErrores(IllegalArgumentException ex, Model model) {
         model.addAttribute("error", ex.getMessage());
-        return "error"; // Vista para mostrar errores de forma amigable
+        return "error";
     }
 }

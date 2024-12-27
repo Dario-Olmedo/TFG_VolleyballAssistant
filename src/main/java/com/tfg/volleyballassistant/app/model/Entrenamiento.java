@@ -3,6 +3,7 @@ package com.tfg.volleyballassistant.app.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Entrenamiento {
@@ -23,23 +24,21 @@ public class Entrenamiento {
     @NotNull
     private Categoria categoria;
 
+    @NotBlank
+    @Pattern(regexp = "^(https?|ftp)://.*$", message = "Debe ser una URL válida")
+    @Column(length = 500)
+    private String explicacionVisual;
+
     // Constructor vacío (necesario para JPA)
     public Entrenamiento() {
     }
 
     // Constructor con argumentos
-    public Entrenamiento(String titulo, String descripcion, Categoria categoria) {
+    public Entrenamiento(String titulo, String descripcion, Categoria categoria, String explicacionVisual) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.categoria = categoria;
-    }
-
-    // Constructor con ID
-    public Entrenamiento(Long id, String titulo, String descripcion, Categoria categoria) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
+        this.explicacionVisual = explicacionVisual;
     }
 
     // Getters y Setters
@@ -75,6 +74,14 @@ public class Entrenamiento {
         this.categoria = categoria;
     }
 
+    public String getExplicacionVisual() {
+        return explicacionVisual;
+    }
+
+    public void setExplicacionVisual(String explicacionVisual) {
+        this.explicacionVisual = explicacionVisual;
+    }
+
     @Override
     public String toString() {
         return "Entrenamiento{" +
@@ -82,6 +89,7 @@ public class Entrenamiento {
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", categoria=" + categoria +
+                ", explicacionVisual='" + explicacionVisual + '\'' +
                 '}';
     }
 

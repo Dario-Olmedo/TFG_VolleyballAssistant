@@ -10,4 +10,7 @@ import java.util.List;
 public interface EntrenamientoRepository extends JpaRepository<Entrenamiento, Long> {
     // Buscar entrenamientos por categoría
     List<Entrenamiento> findByCategoria(Entrenamiento.Categoria categoria);
+
+    // Buscar entrenamientos por título o descripción dentro de una categoría
+    List<Entrenamiento> findByCategoriaAndTituloContainingOrDescripcionContaining(Entrenamiento.Categoria categoria, String titulo, String descripcion);
 }

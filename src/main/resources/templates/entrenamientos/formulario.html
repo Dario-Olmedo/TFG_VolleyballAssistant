@@ -29,6 +29,12 @@
     <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></p>
     <br>
 
+    <!-- Explicación Visual -->
+    <label for="explicacionVisual">Explicación Visual (URL):</label>
+    <input id="explicacionVisual" type="url" th:field="*{explicacionVisual}" placeholder="https://example.com/video" required>
+    <p th:if="${#fields.hasErrors('explicacionVisual')}" th:errors="*{explicacionVisual}"></p>
+    <br>
+
     <!-- Botón de envío -->
     <button type="submit">Guardar</button>
 </form>

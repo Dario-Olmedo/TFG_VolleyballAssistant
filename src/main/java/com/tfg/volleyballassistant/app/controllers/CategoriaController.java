@@ -10,8 +10,20 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoriaController {
 
+    // Obtener todas las categorías
     @GetMapping
     public List<Categoria> getAllCategories() { // Retornar el enum Categoria
         return Arrays.asList(Categoria.values());
+    }
+
+    // Retornar la ruta para una categoría específica
+    @GetMapping("/{categoria}/url")
+    public String getCategoryUrl(@PathVariable String categoria) {
+        try {
+            Categoria categoriaEnum = Categoria.valueOf(categoria.toUpperCase());
+            return "/entrenamientos/" + categoriaEnum.name().toLowerCase();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Categoría no válida: " + categoria);
+        }
     }
 }

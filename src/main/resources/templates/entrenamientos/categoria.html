@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Entrenamientos de ' + ${categoria}"></title>
+</head>
+<body>
+<h1 th:text="'Entrenamientos de ' + ${categoria}"></h1>
+
+<!-- Barra de búsqueda -->
+<form th:action="@{/entrenamientos/{categoria}/buscar(categoria=${categoria})}" method="get" style="margin-bottom: 20px;">
+    <input type="text" name="query" th:value="${query}" placeholder="Buscar por título o descripción...">
+    <button type="submit">Buscar</button>
+</form>
+
+<!-- Botón para añadir nuevo entrenamiento -->
+<a th:href="@{/entrenamientos/nuevo}" style="margin-bottom: 20px; display: block;">Añadir Entrenamiento</a>
+
+<!-- Lista de entrenamientos -->
+<ul>
+    <li th:each="entrenamiento : ${entrenamientos}">
+        <a th:href="@{/entrenamientos/ver/{id}(id=${entrenamiento.id})}" th:text="${entrenamiento.titulo}"></a>
+        <div th:if="${entrenamiento.explicacionVisual != null}">
+            <strong>Visualización:</strong>
+            <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
+        </div>
+    </li>
+</ul>
+
+<!-- Volver a la página principal -->
+<a href="/">Volver a la página principal</a>
+</body>
+</html>
