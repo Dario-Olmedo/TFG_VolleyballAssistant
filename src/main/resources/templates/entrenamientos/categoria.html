@@ -40,7 +40,9 @@
         </thead>
         <tbody>
         <tr th:each="entrenamiento : ${entrenamientos}">
-            <td th:text="${entrenamiento.titulo}"></td>
+            <td>
+                <a th:href="@{/entrenamientos/ver/{id}(id=${entrenamiento.id})}" th:text="${entrenamiento.titulo}"></a>
+            </td>
             <td th:text="${entrenamiento.categoria}"></td>
             <td th:text="${entrenamiento.descripcion}"></td>
             <td>
