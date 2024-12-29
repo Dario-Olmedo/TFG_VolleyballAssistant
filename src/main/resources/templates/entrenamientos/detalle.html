@@ -2,25 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Detalle del Entrenamiento</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+    .btn {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-<h1 th:text="${entrenamiento.titulo}">Título del Entrenamiento</h1>
-<p><strong>Descripción:</strong> <span th:text="${entrenamiento.descripcion}"></span></p>
-<p><strong>Categoría:</strong> <span th:text="${entrenamiento.categoria}"></span></p>
+<div class="container">
+  <h1 th:text="${entrenamiento.titulo}">Título del Entrenamiento</h1>
+  <p><strong>Descripción:</strong> <span th:text="${entrenamiento.descripcion}"></span></p>
+  <p><strong>Categoría:</strong> <span th:text="${entrenamiento.categoria}"></span></p>
 
-<div th:if="${entrenamiento.explicacionVisual != null}">
-  <p><strong>Explicación Visual:</strong></p>
-  <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
+  <div th:if="${entrenamiento.explicacionVisual != null}">
+    <p><strong>Explicación Visual:</strong></p>
+    <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
+  </div>
+
+  <!-- Botón para volver a los entrenamientos de la misma categoría -->
+  <a th:href="@{/entrenamientos/{categoria}(categoria=${entrenamiento.categoria.name().toLowerCase()})}" class="btn">Volver a los entrenamientos</a>
+
+  <!-- Formulario para eliminar el entrenamiento -->
+  <form th:action="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}" method="post">
+    <button type="submit" class="btn" style="background-color: red;">Eliminar Entrenamiento</button>
+  </form>
 </div>
-
-<!-- Botón para volver a los entrenamientos de la misma categoría -->
-<a th:href="@{/entrenamientos/{categoria}(categoria=${entrenamiento.categoria.name().toLowerCase()})}">Volver a los entrenamientos</a>
-
-<!-- Formulario para eliminar el entrenamiento -->
-<form th:action="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}" method="post" style="margin-top: 20px;">
-  <button type="submit" style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
-    Eliminar Entrenamiento
-  </button>
-</form>
 </body>
 </html>

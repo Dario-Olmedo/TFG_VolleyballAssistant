@@ -2,41 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Formulario de Entrenamiento</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<h1 th:text="${entrenamiento.id != null ? 'Editar Entrenamiento' : 'Nuevo Entrenamiento'}"></h1>
-<form th:action="@{/entrenamientos}" th:object="${entrenamiento}" method="post">
-    <!-- Campo oculto para el ID (solo útil en edición) -->
-    <input type="hidden" th:field="*{id}">
+<div class="container">
+    <h1 th:text="${entrenamiento.id != null ? 'Editar Entrenamiento' : 'Nuevo Entrenamiento'}"></h1>
+    <form th:action="@{/entrenamientos}" th:object="${entrenamiento}" method="post">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" th:field="*{id}">
 
-    <!-- Campo para el título -->
-    <label for="titulo">Título:</label>
-    <input id="titulo" type="text" th:field="*{titulo}" required>
-    <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></p>
-    <br>
+        <!-- Campo para el título -->
+        <label for="titulo">Título:</label>
+        <input id="titulo" type="text" th:field="*{titulo}" required>
+        <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></p>
 
-    <!-- Selección de categoría -->
-    <label for="categoria">Categoría:</label>
-    <select id="categoria" th:field="*{categoria}" required>
-        <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
-    </select>
-    <p th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></p>
-    <br>
+        <!-- Selección de categoría -->
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" th:field="*{categoria}" required>
+            <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></p>
 
-    <!-- Descripción -->
-    <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
-    <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></p>
-    <br>
+        <!-- Descripción -->
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
+        <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></p>
 
-    <!-- Explicación Visual -->
-    <label for="explicacionVisual">Explicación Visual (URL):</label>
-    <input id="explicacionVisual" type="url" th:field="*{explicacionVisual}" placeholder="https://example.com/video" required>
-    <p th:if="${#fields.hasErrors('explicacionVisual')}" th:errors="*{explicacionVisual}"></p>
-    <br>
+        <!-- Explicación Visual -->
+        <label for="explicacionVisual">Explicación Visual (URL):</label>
+        <input id="explicacionVisual" type="url" th:field="*{explicacionVisual}" placeholder="https://example.com/video" required>
+        <p th:if="${#fields.hasErrors('explicacionVisual')}" th:errors="*{explicacionVisual}"></p>
 
-    <!-- Botón de envío -->
-    <button type="submit">Guardar</button>
-</form>
+        <!-- Botón de envío -->
+        <button type="submit">Guardar</button>
+    </form>
+</div>
 </body>
 </html>

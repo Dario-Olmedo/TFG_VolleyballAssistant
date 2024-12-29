@@ -2,31 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="'Entrenamientos de ' + ${categoria}"></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .buttons-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+    </style>
 </head>
-<body>
-<h1 th:text="'Entrenamientos de ' + ${categoria}"></h1>
+<body th:class="${categoria.toLowerCase()}">
+<div class="container">
+    <h1 th:text="'Entrenamientos de ' + ${categoria}"></h1>
 
-<!-- Barra de búsqueda -->
-<form th:action="@{/entrenamientos/{categoria}/buscar(categoria=${categoria})}" method="get" style="margin-bottom: 20px;">
-    <input type="text" name="query" th:value="${query}" placeholder="Buscar por título o descripción...">
-    <button type="submit">Buscar</button>
-</form>
+    <!-- Barra de búsqueda -->
+    <form th:action="@{/entrenamientos/{categoria}/buscar(categoria=${categoria})}" method="get">
+        <input type="text" name="query" th:value="${query}" placeholder="Buscar por título o descripción...">
+        <button type="submit">Buscar</button>
+    </form>
 
-<!-- Botón para añadir nuevo entrenamiento -->
-<a th:href="@{/entrenamientos/nuevo}" style="margin-bottom: 20px; display: block;">Añadir Entrenamiento</a>
+    <!-- Tabla de entrenamientos -->
+    <table>
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Explicación Visual y Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entrenamiento : ${entrenamientos}">
+            <td th:text="${entrenamiento.titulo}"></td>
+            <td th:text="${entrenamiento.categoria}"></td>
+            <td th:text="${entrenamiento.descripcion}"></td>
+            <td>
+                <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
+                <div class="buttons-row">
+                    <form th:action="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-delete">Eliminar</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${entrenamientos.isEmpty()}">
+            <td colspan="4">No hay entrenamientos disponibles en esta categoría.</td>
+        </tr>
+        </tbody>
+    </table>
 
-<!-- Lista de entrenamientos -->
-<ul>
-    <li th:each="entrenamiento : ${entrenamientos}">
-        <a th:href="@{/entrenamientos/ver/{id}(id=${entrenamiento.id})}" th:text="${entrenamiento.titulo}"></a>
-        <div th:if="${entrenamiento.explicacionVisual != null}">
-            <strong>Visualización:</strong>
-            <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
-        </div>
-    </li>
-</ul>
+    <!-- Botón para añadir nuevo entrenamiento -->
+    <a th:href="@{/entrenamientos/nuevo}" class="btn" style="margin: 20px 0;">Añadir Entrenamiento</a>
 
-<!-- Volver a la página principal -->
-<a href="/">Volver a la página principal</a>
+    <!-- Paginación -->
+    <div class="pagination">
+        <button th:if="${currentPage != null and currentPage > 0}"
+                th:href="@{/entrenamientos/{categoria}(categoria=${categoria}, page=${currentPage - 1}, size=${pageSize})}">
+            Anterior
+        </button>
+
+        <span th:if="${currentPage != null and totalPages != null}"
+              th:text="'Página ' + (${currentPage + 1}) + ' de ' + ${totalPages}"></span>
+
+        <button th:if="${currentPage != null and totalPages != null and (currentPage + 1) < totalPages}"
+                th:href="@{/entrenamientos/{categoria}(categoria=${categoria}, page=${currentPage + 1}, size=${pageSize})}">
+            Siguiente
+        </button>
+    </div>
+
+    <!-- Volver a la página principal -->
+    <a href="/">Volver a la página principal</a>
+</div>
 </body>
 </html>

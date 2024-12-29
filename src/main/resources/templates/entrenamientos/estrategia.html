@@ -4,18 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Entrenamientos de Estrategia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<h1>Entrenamientos de Estrategia</h1>
-<p>Lista de entrenamientos enfocados en estrategia:</p>
-<ul>
-  <!-- Iterar sobre los entrenamientos y mostrarlos -->
-  <th:block th:each="entrenamiento : ${entrenamientos}">
-    <li>
-      <strong th:text="${entrenamiento.titulo}">Título</strong>:
-      <span th:text="${entrenamiento.descripcion}">Descripción</span>
-    </li>
-  </th:block>
-</ul>
+<div class="container">
+  <h1>Entrenamientos de Estrategia</h1>
+  <p>Lista de entrenamientos enfocados en estrategia:</p>
+  <ul>
+    <!-- Iterar sobre los entrenamientos y mostrarlos -->
+    <th:block th:each="entrenamiento : ${entrenamientos}">
+      <li>
+        <strong th:text="${entrenamiento.titulo}">Título</strong>:
+        <span th:text="${entrenamiento.descripcion}">Descripción</span>
+      </li>
+    </th:block>
+  </ul>
+  <a href="/" class="btn">Volver a la página principal</a>
+</div>
 </body>
 </html>
