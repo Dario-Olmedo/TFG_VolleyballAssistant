@@ -7,7 +7,7 @@ Proyecto de final de grado para DAM en el que he desarrollado una aplicación pa
 - Java 17
 - Maven 3.9.9
 
-## CÓMO EJECUTRAR LA APP
+## CÓMO EJECUTAR LA APP
 
 Para instalar las dependencias necesarias:
 ```
