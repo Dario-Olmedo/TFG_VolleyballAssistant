@@ -23,21 +23,21 @@ public class SpringbootAppIntellijApplication {
 			if (repository.count() == 0) {
 				repository.save(new Entrenamiento(
 						"Entrenamiento de Saque",
-						"Práctica intensiva de saques largos",
+						"Práctica básica de saques",
 						Categoria.TECNICA,
-						"https://example.com/saque-video"
+						"https://www.youtube.com/watch?v=Ro8UAwYUqCs"
 				));
 				repository.save(new Entrenamiento(
 						"Circuito de Fuerza",
 						"Entrenamiento físico para resistencia y fuerza",
 						Categoria.FISICO,
-						"https://example.com/fuerza-video"
+						"https://www.youtube.com/watch?v=xDoik0qjdLE"
 				));
 				repository.save(new Entrenamiento(
 						"Formaciones Estratégicas",
-						"Formaciones avanzadas para competiciones",
+						"Explicación del sistema 5-1",
 						Categoria.ESTRATEGIA,
-						"https://example.com/estrategia-video"
+						"https://www.youtube.com/watch?v=zanhHt8pAvY"
 				));
 			} else {
 				repository.findAll().forEach(System.out::println);
