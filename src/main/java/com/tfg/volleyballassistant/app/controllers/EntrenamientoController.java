@@ -63,7 +63,20 @@ public class EntrenamientoController {
         Entrenamiento entrenamiento = entrenamientoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("entrenamiento", entrenamiento);
+        String videoUrl = entrenamiento.getExplicacionVisual();
+        String embedUrl = videoUrl.replace("watch?v=", "embed/");
+        model.addAttribute("embedUrl", embedUrl);
         return "entrenamientos/detalle";
+    }
+
+    // Editar detalle del entrenamiento
+    @GetMapping("/editar/{id}")
+    public String verFormularioEntrenamiento(@PathVariable Long id, Model model) {
+        Entrenamiento entrenamiento = entrenamientoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        model.addAttribute("entrenamiento", entrenamiento);
+        model.addAttribute("categorias", Entrenamiento.Categoria.values());
+        return "entrenamientos/formulario";
     }
 
     // Eliminar entrenamiento desde el detalle

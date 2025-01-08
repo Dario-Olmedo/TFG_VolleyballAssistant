@@ -20,6 +20,14 @@
 <body>
 <div class="container">
   <h1 th:text="${entrenamiento.titulo}">Título del Entrenamiento</h1>
+  <iframe width="560" height="315"
+          th:src="${embedUrl}"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+  </iframe>
   <p><strong>Descripción:</strong> <span th:text="${entrenamiento.descripcion}"></span></p>
   <p><strong>Categoría:</strong> <span th:text="${entrenamiento.categoria}"></span></p>
 
@@ -33,7 +41,7 @@
 
   <!-- Formulario para eliminar el entrenamiento -->
   <form th:action="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}" method="post">
-    <button type="submit" class="btn" style="background-color: red;">Eliminar Entrenamiento</button>
+    <button type="submit" onclick="return confirm('¿Seguro que quiere eliminar el entrenamiento?');" class="btn btn-delete">Eliminar</button>
   </form>
 </div>
 </body>

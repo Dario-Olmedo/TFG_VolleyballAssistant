@@ -31,7 +31,7 @@ public class SpringbootAppIntellijApplication {
 						"Circuito de Fuerza",
 						"Entrenamiento físico para resistencia y fuerza",
 						Categoria.FISICO,
-						"https://www.youtube.com/watch?v=xDoik0qjdLE"
+						"https://www.youtube.com/watch?v=mPJT_GvG7FU"
 				));
 				repository.save(new Entrenamiento(
 						"Formaciones Estratégicas",

@@ -48,6 +48,7 @@
             <td>
                 <a th:href="${entrenamiento.explicacionVisual}" target="_blank" th:text="${entrenamiento.explicacionVisual}"></a>
                 <div class="buttons-row">
+                    <a th:href="@{/entrenamientos/editar/{id}(id=${entrenamiento.id})}" class="btn btn-edit">Editar</a>
                     <form th:action="@{/entrenamientos/eliminar/{id}(id=${entrenamiento.id})}" method="post" style="display: inline;">
                         <button type="submit" onclick="return confirm('¿Seguro que quiere eliminar el entrenamiento?');" class="btn btn-delete">Eliminar</button>
                     </form>
